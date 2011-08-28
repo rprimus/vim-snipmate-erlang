@@ -1,0 +1,1654 @@
+# Wed Jun  2 13:40:27 BST 2010 -primus
+# $Id: erlang.snippets,v 1.1 2011/02/19 16:36:37 micro Exp $
+
+#=========================================================
+# File header material
+#=========================================================
+
+# normal header
+snippet head normal header
+	%%% $Id: erlang.snippets,v 1.1 2011/02/19 16:36:37 micro Exp $
+	%%% @author  `g:snips_author` `g:my_email_addr`
+	%%% @copyright (C) © `strftime("%Y")`, `g:snips_author`. All Rights Reserved.
+	%%% @doc
+	%%%		${1}
+	%%% @end
+	%%% Created :  `strftime("%a %b %d %H:%M:%S %Y")` by `g:snips_author` µ
+
+	-module(`Filename()`).
+
+
+
+	%% vim: set et ts=2 sw=2 ai invlist si cul nu:	
+# file header (large)
+snippet head large header
+	%%%-------------------------------------------------------------------
+	%%% $Id: erlang.snippets,v 1.1 2011/02/19 16:36:37 micro Exp $
+	%%% @author  `g:snips_author` `g:my_email_addr`
+	%%% @copyright (C) `strftime("%Y")` `g:snips_author`. All Rights Reserved.
+	%%% @doc
+	%%%		${1}
+	%%% @end
+	%%% Created :  `strftime("%a %b %d %H:%M:%S %Y")` by `g:snips_author` µ
+	%%%-------------------------------------------------------------------
+
+	-module(`Filename()`).
+
+
+
+	%% vim: set et ts=2 sw=2 ai invlist si cul nu:
+
+# disclaimer
+snippet disc
+	%%% THE SOFTWARE IS PROVIDED "AS-IS" AND WITHOUT WARRANTY OF ANY KIND, EXPRESS,
+	%%% IMPLIED OR OTHERWISE, INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF
+	%%% MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+
+	%%% IN NO EVENT SHALL ${1:`g:snips_author`} BE LIABLE FOR ANY SPECIAL, INCIDENTAL, INDIRECT OR
+	%%% CONSEQUENTIAL DAMAGES OF ANY KIND, OR ANY DAMAGES WHATSOEVER RESULTING FROM
+	%%% LOSS OF USE, DATA OR PROFITS, WHETHER OR NOT ADVISED OF THE POSSIBILITY OF
+	%%% DAMAGE, AND ON ANY THEORY OF LIABILITY,  ARISING OUT OF OR IN CONNECTION WITH
+	%%% THE USE OR PERFORMANCE OF THIS SOFTWARE.
+	%%% See the file COPYING
+
+#=========================================================
+# Module material
+#=========================================================
+
+# -module()
+snippet mod
+	-module(`Filename()`).
+
+# -author()
+snippet auth
+	-author("`g:snips_author` `g:my_email_addr`").
+
+# -include()
+snippet inc app
+	-include_lib("${1:app}/include/${2:$1}.hrl").${3}
+snippet inc ?MODULE.hrl
+	-include("${1:`Filename("$1.hrl")`}").${3}
+	
+# -export()
+snippet exp
+	-export([${1:exports}]).${3}
+
+# vsn
+snippet vsn
+	-vsn(${1:version})
+
+# -import()
+snippet imp general
+	-import(${1:module}, [${2:func}/${3:arity}]).${4}
+snippet imp lists
+	-import(lists, [flatten/1, member/2, sort/1, map/2, foldl/3, foreach/2]).
+	
+# -define()
+snippet def
+	-define(${1:macro}, ${2:replace}).${3}
+
+# -record()
+snippet rec
+	-record(${1:name}, {
+		${2:field}	::${3:type},
+		${4:field}	::${5:type}
+	}).
+
+#=========================================================
+# Module material
+#=========================================================
+
+# list comprehension
+snippet lc list comprehension
+	[ ${1:X} || $1 <- ${2:L} ]${3}
+snippet lc map
+	[ ${1:X} || $1 <- ${2:L} ]${3}
+# Bit string comprehension
+snippet lc bit string comprehension
+	<< <<${1:X}>> || <<${2:$1}>> <= <<${3:expr}>> >>${4}
+
+# list notation [H|T]
+snippet ht
+	[${1:H}|${2:T}]${3}
+	
+# lists:map()
+snippet map
+	lists:map(fun(${1:X}) -> $1 end, ${2:L})
+
+# lists:foreach()
+snippet for
+	lists:foreach(fun(${1:X}) -> $1 end, ${2:L})
+	
+# io:format
+snippet iof
+	io:format("${1:string}~n", [${2:values}])${3}
+
+# function header
+snippet fun header only
+	%%--------------------------------------------------------------------
+	%% @doc:	${1:desription}
+	%% @spec:	${2:function}() -> ${3:return type}.
+	%% @end
+	%%--------------------------------------------------------------------
+
+	-spec($2() -> $3 ).
+# function header - 1 arg
+snippet fun function()
+	%%--------------------------------------------------------------------
+	%% @doc:	${1:desription}
+	%% @spec:	${2:function}() -> ${3:return type}.
+	%% @end
+	%%--------------------------------------------------------------------
+
+	-spec($2() -> $3 ).
+	
+	$2() ->
+		${4:body}
+snippet fun function(X)
+	%%--------------------------------------------------------------------
+	%% @doc:	${1:desription}
+	%% @spec:	${2:function}(${3:arg}::${4:type} ) -> ${5:return type}.
+	%% @end
+	%%--------------------------------------------------------------------
+
+	-spec($2($4) -> $5 ).
+	
+	$2($3) ->
+		${6:body}
+# function header - 2 args
+snippet fun function(X,Y)
+	%%--------------------------------------------------------------------
+	%% @doc:	${1:desription}
+	%% @spec:	${2:function}(${3:arg}::${4:type}, ${5:arg}::${6:type} ) -> ${7:return type}.
+	%% @end
+	%%--------------------------------------------------------------------
+
+	-spec($2($4, $6) -> $7).
+	
+	$2($3, $5 ) ->
+		${8:body}
+snippet fun function(X,Y,Z)
+	%%--------------------------------------------------------------------
+	%% @doc:	${1:desription}
+	%% @spec:	${2:function}(${3:arg}::${4:type}, ${5:arg}::${6:type}, ${7:arg}::${8:type} ) -> ${9:return type}.
+	%% @end
+	%%--------------------------------------------------------------------
+
+	-spec($2($4, $6, $8 ) -> $9).
+	
+	$2($3, $5, $7) ->
+		${10:body}
+# fun body
+snippet fun anonymous
+	fun(${1:arg}) -> ${2:body} end
+	
+
+
+# if
+snippet if
+	if 
+		${1:guard} ->
+			${2:action}
+	end
+
+# case
+snippet case
+	case  ${1:condition} of
+		${2:pattern} ->
+			${3:expr};
+		${4:pattern} ->
+			${5:expr}
+	end${6}
+
+# send (!)
+snippet send
+	${1:pid} ! ${2:expr1}.
+
+# receive
+snippet recv receive
+	receive
+		${1:pattern1} ->
+			${2:expr1}
+	end
+# receive loop
+snippet recv receive loop
+	loop(${1:State}) ->
+		receive
+			${2:Pattern1} ->
+				loop(${3:NewState})
+		end.
+# receive_after
+snippet recv receive after
+	receive
+		${1:pattern1} ->
+			${2:expr1}
+	after 
+		${3:Timeout} ->
+			${4:expr2}
+	end
+
+# spawn (with auto export)
+snippet spawn mfa
+	-export([$2/${4:0}]).
+	spawn(${1:?MODULE}, ${2:function}, [${3}]).
+# spawn (using fun)
+snippet spawn fun
+	spawn(fun (${1:X}) -> ${2:body} end)
+	
+# register using pid
+snippet reg pid
+	register(${1:?MODULE}, ${2:Pid})${3}
+# register using spawn
+snippet reg spawn mfa
+	register(${1:?MODULE}, spawn($1, ${2:function}, [${3:args}]))${4}
+	
+# test
+snippet t
+	`TriggerSnippet()`
+	
+# erlang data comparison
+# number < atom < reference < fun < port < pid < tuple < list < bit string
+
+
+#=========================================================
+# Misc files
+#=========================================================
+
+# file template for Emakefile
+snippet emake
+	{ './src/*',
+		[{i, "./include"},
+			{outdir, "./ebin"},
+			%%warn_obsolete_guard, warn_unused_import, warn_shadow_vars, warn_export_vars, strong_validation, report,
+			debug_info
+		]
+	}.
+
+
+	%% vim: set et ts=2 sw=2 ai invlist si cul nu:
+	
+# file template for .app file
+snippet .app
+	{application, ${1:Application}, [
+		{description,  "${2:Description}"},
+		{id,           "${3:Id}"},
+		{vsn,          "${4:Vsn}"},
+		{modules,      [$1, $1_app, ${5:Modules}]},
+		{registered,   [${6:Names}]},
+		{included_applications, [${7:Apps}]},
+		{applications, [kernel, stdlib, ${8:Apps}]},
+		{env,          [{${9:par}, ${10:val}}]},
+		{mod,          {$1_app, [${11:args}]}},
+		{start_phases, [{${11:Phase}, ${12:PhaseArgs}}]}
+	]}.
+
+
+	%% vim: set et ts=2 sw=2 ai invlist si cul nu:
+
+	
+#=========================================================
+# Erlang OTP templates
+#=========================================================
+
+# below taken from erlang-skels.el
+# server (small)
+snippet otp small server
+	%%%-------------------------------------------------------------------
+	%%% @author  `g:snips_author` `g:my_email_addr`
+	%%% @copyright (C) `strftime("%Y")` `g:snips_author`. All Rights Reserved.
+	%%% @doc
+	%%%		${1}
+	%%% @end
+	%%% Created :  `strftime("%a %b %d %H:%M:%S %Y")` by `g:snips_author`
+	%%%-------------------------------------------------------------------
+	-module(`Filename()`).
+
+	-export([start/0, init/1]).
+
+
+	start() ->
+		spawn(, init, [self()]).
+
+	init(From) ->
+		loop(From).
+
+	loop(From) ->
+		receive
+			_ ->
+				loop(From)
+		end.
+
+
+
+	%% vim: set et ts=2 sw=2 ai invlist si cul nu:	
+# gen_server
+snippet otp gen_server
+	%%%-------------------------------------------------------------------
+	%%% @author  `g:snips_author` `g:my_email_addr`
+	%%% @copyright (C) `strftime("%Y")` `g:snips_author`. All Rights Reserved.
+	%%% @doc
+	%%%		${1}
+	%%% @end
+	%%% Created :  `strftime("%a %b %d %H:%M:%S %Y")` by `g:snips_author`
+	%%%-------------------------------------------------------------------
+	-module(`Filename()`).
+
+	-behaviour(gen_server).
+
+	%% API
+	-export([start_link/0]).
+
+	%% gen_server callbacks
+	-export([init/1, handle_call/3, handle_cast/2, handle_info/2,
+		terminate/2, code_change/3]).
+
+	-define(SERVER, ?MODULE). 
+
+	-record(state, {}).
+
+	%%%===================================================================
+	%%% API
+	%%%===================================================================
+
+	%%--------------------------------------------------------------------
+	%% @doc
+	%% Starts the server
+	%%
+	%% @spec start_link() -> {ok, Pid} | ignore | {error, Error}
+	%% @end
+	%%--------------------------------------------------------------------
+	start_link() ->
+		gen_server:start_link({local, ?SERVER}, ?MODULE, [], []).
+
+	%%%===================================================================
+	%%% gen_server callbacks
+	%%%===================================================================
+
+	%%--------------------------------------------------------------------
+	%% @private
+	%% @doc
+	%% Initializes the server
+	%%
+	%% @spec init(Args) -> {ok, State} |
+	%%                     {ok, State, Timeout} |
+	%%                     ignore |
+	%%                     {stop, Reason}
+	%% @end
+	%%--------------------------------------------------------------------
+	init([]) ->
+		{ok, #state{}}.
+
+	%%--------------------------------------------------------------------
+	%% @private
+	%% @doc
+	%% Handling call messages
+	%%
+	%% @spec handle_call(Request, From, State) ->
+	%%                                   {reply, Reply, State} |
+	%%                                   {reply, Reply, State, Timeout} |
+	%%                                   {noreply, State} |
+	%%                                   {noreply, State, Timeout} |
+	%%                                   {stop, Reason, Reply, State} |
+	%%                                   {stop, Reason, State}
+	%% @end
+	%%--------------------------------------------------------------------
+	handle_call(_Request, _From, State) ->
+		Reply = ok,
+		{reply, Reply, State}.
+
+	%%--------------------------------------------------------------------
+	%% @private
+	%% @doc
+	%% Handling cast messages
+	%%
+	%% @spec handle_cast(Msg, State) -> {noreply, State} |
+	%%                                  {noreply, State, Timeout} |
+	%%                                  {stop, Reason, State}
+	%% @end
+	%%--------------------------------------------------------------------
+	handle_cast(_Msg, State) ->
+		{noreply, State}.
+
+	%%--------------------------------------------------------------------
+	%% @private
+	%% @doc
+	%% Handling all non call/cast messages
+	%%
+	%% @spec handle_info(Info, State) -> {noreply, State} |
+	%%                                   {noreply, State, Timeout} |
+	%%                                   {stop, Reason, State}
+	%% @end
+	%%--------------------------------------------------------------------
+	handle_info(_Info, State) ->
+		{noreply, State}.
+
+	%%--------------------------------------------------------------------
+	%% @private
+	%% @doc
+	%% This function is called by a gen_server when it is about to
+	%% terminate. It should be the opposite of Module:init/1 and do any
+	%% necessary cleaning up. When it returns, the gen_server terminates
+	%% with Reason. The return value is ignored.
+	%%
+	%% @spec terminate(Reason, State) -> void()
+	%% @end
+	%%--------------------------------------------------------------------
+	terminate(_Reason, _State) ->
+		ok.
+
+	%%--------------------------------------------------------------------
+	%% @private
+	%% @doc
+	%% Convert process state when code is changed
+	%%
+	%% @spec code_change(OldVsn, State, Extra) -> {ok, NewState}
+	%% @end
+	%%--------------------------------------------------------------------
+	code_change(_OldVsn, State, _Extra) ->
+		{ok, State}.
+
+	%%%===================================================================
+	%%% Internal functions
+	%%%===================================================================
+
+
+
+	%% vim: set et ts=2 sw=2 ai invlist si cul nu:	
+# gen_event
+snippet otp gen_event
+	%%%-------------------------------------------------------------------
+	%%% @author  `g:snips_author` `g:my_email_addr`
+	%%% @copyright (C) `strftime("%Y")` `g:snips_author`. All Rights Reserved.
+	%%% @doc
+	%%%		${1}
+	%%% @end
+	%%% Created :  `strftime("%a %b %d %H:%M:%S %Y")` by `g:snips_author`
+	%%%-------------------------------------------------------------------
+	-module(`Filename()`).
+
+	-behaviour(gen_event).
+
+	%% API
+	-export([start_link/0, add_handler/0]).
+
+	%% gen_event callbacks
+	-export([init/1, handle_event/2, handle_call/2, 
+		handle_info/2, terminate/2, code_change/3]).
+
+	-define(SERVER, ?MODULE). 
+
+	-record(state, {}).
+
+	%%%===================================================================
+	%%% gen_event callbacks
+	%%%===================================================================
+
+	%%--------------------------------------------------------------------
+	%% @doc
+	%% Creates an event manager
+	%%
+	%% @spec start_link() -> {ok, Pid} | {error, Error}
+	%% @end
+	%%--------------------------------------------------------------------
+	start_link() ->
+		gen_event:start_link({local, ?SERVER}).
+
+	%%--------------------------------------------------------------------
+	%% @doc
+	%% Adds an event handler
+	%%
+	%% @spec add_handler() -> ok | {'EXIT', Reason} | term()
+	%% @end
+	%%--------------------------------------------------------------------
+	add_handler() ->
+		gen_event:add_handler(?SERVER, ?MODULE, []).
+
+	%%%===================================================================
+	%%% gen_event callbacks
+	%%%===================================================================
+
+	%%--------------------------------------------------------------------
+	%% @private
+	%% @doc
+	%% Whenever a new event handler is added to an event manager,
+	%% this function is called to initialize the event handler.
+	%%
+	%% @spec init(Args) -> {ok, State}
+	%% @end
+	%%--------------------------------------------------------------------
+	init([]) ->
+		{ok, #state{}}.
+
+	%%--------------------------------------------------------------------
+	%% @private
+	%% @doc
+	%% Whenever an event manager receives an event sent using
+	%% gen_event:notify/2 or gen_event:sync_notify/2, this function is
+	%% called for each installed event handler to handle the event.
+	%%
+	%% @spec handle_event(Event, State) ->
+	%%                          {ok, State} |
+	%%                          {swap_handler, Args1, State1, Mod2, Args2} |
+	%%                          remove_handler
+	%% @end
+	%%--------------------------------------------------------------------
+	handle_event(_Event, State) ->
+		{ok, State}.
+
+	%%--------------------------------------------------------------------
+	%% @private
+	%% @doc
+	%% Whenever an event manager receives a request sent using
+	%% gen_event:call/3,4, this function is called for the specified
+	%% event handler to handle the request.
+	%%
+	%% @spec handle_call(Request, State) ->
+	%%                   {ok, Reply, State} |
+	%%                   {swap_handler, Reply, Args1, State1, Mod2, Args2} |
+	%%                   {remove_handler, Reply}
+	%% @end
+	%%--------------------------------------------------------------------
+	handle_call(_Request, State) ->
+		Reply = ok,
+		{ok, Reply, State}.
+
+	%%--------------------------------------------------------------------
+	%% @private
+	%% @doc
+	%% This function is called for each installed event handler when
+	%% an event manager receives any other message than an event or a
+	%% synchronous request (or a system message).
+	%%
+	%% @spec handle_info(Info, State) ->
+	%%                         {ok, State} |
+	%%                         {swap_handler, Args1, State1, Mod2, Args2} |
+	%%                         remove_handler
+	%% @end
+	%%--------------------------------------------------------------------
+	handle_info(_Info, State) ->
+		{ok, State}.
+
+	%%--------------------------------------------------------------------
+	%% @private
+	%% @doc
+	%% Whenever an event handler is deleted from an event manager, this
+	%% function is called. It should be the opposite of Module:init/1 and
+	%% do any necessary cleaning up.
+	%%
+	%% @spec terminate(Reason, State) -> void()
+	%% @end
+	%%--------------------------------------------------------------------
+	terminate(_Reason, _State) ->
+		ok.
+
+	%%--------------------------------------------------------------------
+	%% @private
+	%% @doc
+	%% Convert process state when code is changed
+	%%
+	%% @spec code_change(OldVsn, State, Extra) -> {ok, NewState}
+	%% @end
+	%%--------------------------------------------------------------------
+	code_change(_OldVsn, State, _Extra) ->
+		{ok, State}.
+
+	%%%===================================================================
+	%%% Internal functions
+	%%%===================================================================
+
+
+
+	%% vim: set et ts=2 sw=2 ai invlist si cul nu:
+# gen_fsm
+snippet otp gen_fsm
+	%%%-------------------------------------------------------------------
+	%%% @author  `g:snips_author` `g:my_email_addr`
+	%%% @copyright (C) `strftime("%Y")` `g:snips_author`. All Rights Reserved.
+	%%% @doc
+	%%%		${1}
+	%%% @end
+	%%% Created :  `strftime("%a %b %d %H:%M:%S %Y")` by `g:snips_author`
+	%%%-------------------------------------------------------------------
+	-module(`Filename()`).
+
+	-behaviour(gen_fsm).
+
+	%% API
+	-export([start_link/0]).
+
+	%% gen_fsm callbacks
+	-export([init/1, state_name/2, state_name/3, handle_event/3,
+		handle_sync_event/4, handle_info/3, terminate/3, code_change/4]).
+
+	-define(SERVER, ?MODULE).
+
+	-record(state, {}).
+
+	%%%===================================================================
+	%%% API
+	%%%===================================================================
+
+	%%--------------------------------------------------------------------
+	%% @doc
+	%% Creates a gen_fsm process which calls Module:init/1 to
+	%% initialize. To ensure a synchronized start-up procedure, this
+	%% function does not return until Module:init/1 has returned.
+	%%
+	%% @spec start_link() -> {ok, Pid} | ignore | {error, Error}
+	%% @end
+	%%--------------------------------------------------------------------
+	start_link() ->
+		gen_fsm:start_link({local, ?SERVER}, ?MODULE, [], []).
+
+	%%%===================================================================
+	%%% gen_fsm callbacks
+	%%%===================================================================
+
+	%%--------------------------------------------------------------------
+	%% @private
+	%% @doc
+	%% Whenever a gen_fsm is started using gen_fsm:start/[3,4] or
+	%% gen_fsm:start_link/[3,4], this function is called by the new
+	%% process to initialize.
+	%%
+	%% @spec init(Args) -> {ok, StateName, State} |
+	%%                     {ok, StateName, State, Timeout} |
+	%%                     ignore |
+	%%                     {stop, StopReason}
+	%% @end
+	%%--------------------------------------------------------------------
+	init([]) ->
+		{ok, state_name, #state{}}.
+
+	%%--------------------------------------------------------------------
+	%% @private
+	%% @doc
+	%% There should be one instance of this function for each possible
+	%% state name. Whenever a gen_fsm receives an event sent using
+	%% gen_fsm:send_event/2, the instance of this function with the same
+	%% name as the current state name StateName is called to handle
+	%% the event. It is also called if a timeout occurs.
+	%%
+	%% @spec state_name(Event, State) ->
+	%%                   {next_state, NextStateName, NextState} |
+	%%                   {next_state, NextStateName, NextState, Timeout} |
+	%%                   {stop, Reason, NewState}
+	%% @end
+	%%--------------------------------------------------------------------
+	state_name(_Event, State) ->
+		{next_state, state_name, State}.
+
+	%%--------------------------------------------------------------------
+	%% @private
+	%% @doc
+	%% There should be one instance of this function for each possible
+	%% state name. Whenever a gen_fsm receives an event sent using
+	%% gen_fsm:sync_send_event/[2,3], the instance of this function with
+	%% the same name as the current state name StateName is called to
+	%% handle the event.
+	%%
+	%% @spec state_name(Event, From, State) ->
+	%%                   {next_state, NextStateName, NextState} |
+	%%                   {next_state, NextStateName, NextState, Timeout} |
+	%%                   {reply, Reply, NextStateName, NextState} |
+	%%                   {reply, Reply, NextStateName, NextState, Timeout} |
+	%%                   {stop, Reason, NewState} |
+	%%                   {stop, Reason, Reply, NewState}
+	%% @end
+	%%--------------------------------------------------------------------
+	state_name(_Event, _From, State) ->
+		Reply = ok,
+		{reply, Reply, state_name, State}.
+
+	%%--------------------------------------------------------------------
+	%% @private
+	%% @doc
+	%% Whenever a gen_fsm receives an event sent using
+	%% gen_fsm:send_all_state_event/2, this function is called to handle
+	%% the event.
+	%%
+	%% @spec handle_event(Event, StateName, State) ->
+	%%                   {next_state, NextStateName, NextState} |
+	%%                   {next_state, NextStateName, NextState, Timeout} |
+	%%                   {stop, Reason, NewState}
+	%% @end
+	%%--------------------------------------------------------------------
+	handle_event(_Event, StateName, State) ->
+		{next_state, StateName, State}.
+
+	%%--------------------------------------------------------------------
+	%% @private
+	%% @doc
+	%% Whenever a gen_fsm receives an event sent using
+	%% gen_fsm:sync_send_all_state_event/[2,3], this function is called
+	%% to handle the event.
+	%%
+	%% @spec handle_sync_event(Event, From, StateName, State) ->
+	%%                   {next_state, NextStateName, NextState} |
+	%%                   {next_state, NextStateName, NextState, Timeout} |
+	%%                   {reply, Reply, NextStateName, NextState} |
+	%%                   {reply, Reply, NextStateName, NextState, Timeout} |
+	%%                   {stop, Reason, NewState} |
+	%%                   {stop, Reason, Reply, NewState}
+	%% @end
+	%%--------------------------------------------------------------------
+	handle_sync_event(_Event, _From, StateName, State) ->
+		Reply = ok,
+		{reply, Reply, StateName, State}.
+
+	%%--------------------------------------------------------------------
+	%% @private
+	%% @doc
+	%% This function is called by a gen_fsm when it receives any
+	%% message other than a synchronous or asynchronous event
+	%% (or a system message).
+	%%
+	%% @spec handle_info(Info,StateName,State)->
+	%%                   {next_state, NextStateName, NextState} |
+	%%                   {next_state, NextStateName, NextState, Timeout} |
+	%%                   {stop, Reason, NewState}
+	%% @end
+	%%--------------------------------------------------------------------
+	handle_info(_Info, StateName, State) ->
+		{next_state, StateName, State}.
+
+	%%--------------------------------------------------------------------
+	%% @private
+	%% @doc
+	%% This function is called by a gen_fsm when it is about to
+	%% terminate. It should be the opposite of Module:init/1 and do any
+	%% necessary cleaning up. When it returns, the gen_fsm terminates with
+	%% Reason. The return value is ignored.
+	%%
+	%% @spec terminate(Reason, StateName, State) -> void()
+	%% @end
+	%%--------------------------------------------------------------------
+	terminate(_Reason, _StateName, _State) ->
+		ok.
+
+	%%--------------------------------------------------------------------
+	%% @private
+	%% @doc
+	%% Convert process state when code is changed
+	%%
+	%% @spec code_change(OldVsn, StateName, State, Extra) ->
+	%%                   {ok, StateName, NewState}
+	%% @end
+	%%--------------------------------------------------------------------
+	code_change(_OldVsn, StateName, State, _Extra) ->
+		{ok, StateName, State}.
+
+	%%%===================================================================
+	%%% Internal functions
+	%%%===================================================================
+
+
+
+	%% vim: set et ts=2 sw=2 ai invlist si cul nu:
+# supervisor
+snippet otp supervisor
+	%%%-------------------------------------------------------------------
+	%%% @author  `g:snips_author` `g:my_email_addr`
+	%%% @copyright (C) `strftime("%Y")` `g:snips_author`. All Rights Reserved.
+	%%% @doc
+	%%%		${1}
+	%%% @end
+	%%% Created :  `strftime("%a %b %d %H:%M:%S %Y")` by `g:snips_author`
+	%%%-------------------------------------------------------------------
+	-module(`Filename()`).
+
+	-behaviour(supervisor).
+
+	%% API
+	-export([start_link/0]).
+
+	%% Supervisor callbacks
+	-export([init/1]).
+
+	-define(SERVER, ?MODULE).
+
+	%%%===================================================================
+	%%% API functions
+	%%%===================================================================
+
+	%%--------------------------------------------------------------------
+	%% @doc
+	%% Starts the supervisor
+	%%
+	%% @spec start_link() -> {ok, Pid} | ignore | {error, Error}
+	%% @end
+	%%--------------------------------------------------------------------
+	start_link() ->
+		supervisor:start_link({local, ?SERVER}, ?MODULE, []).
+
+	%%%===================================================================
+	%%% Supervisor callbacks
+	%%%===================================================================
+
+	%%--------------------------------------------------------------------
+	%% @private
+	%% @doc
+	%% Whenever a supervisor is started using supervisor:start_link/[2,3],
+	%% this function is called by the new process to find out about
+	%% restart strategy, maximum restart frequency and child
+	%% specifications.
+	%%
+	%% @spec init(Args) -> {ok, {SupFlags, [ChildSpec]}} |
+	%%                     ignore |
+	%%                     {error, Reason}
+	%% @end
+	%%--------------------------------------------------------------------
+	init([]) ->
+		RestartStrategy = one_for_one,
+		MaxRestarts = 1000,
+		MaxSecondsBetweenRestarts = 3600,
+
+		SupFlags = {RestartStrategy, MaxRestarts, MaxSecondsBetweenRestarts},
+
+		Restart = permanent,
+		Shutdown = 2000,
+		Type = worker,
+
+		AChild = {'AName', {'AModule', start_link, []},
+			Restart, Shutdown, Type, ['AModule']},
+
+		{ok, {SupFlags, [AChild]}}.
+
+	%%%===================================================================
+	%%% Internal functions
+	%%%===================================================================
+
+
+
+	%% vim: set et ts=2 sw=2 ai invlist si cul nu:	
+# supervisor bridge
+snippet otp supervisor_bridge
+	%%%-------------------------------------------------------------------
+	%%% @author  `g:snips_author` `g:my_email_addr`
+	%%% @copyright (C) `strftime("%Y")` `g:snips_author`. All Rights Reserved.
+	%%% @doc
+	%%%		${1}
+	%%% @end
+	%%% Created :  `strftime("%a %b %d %H:%M:%S %Y")` by `g:snips_author`
+	%%%-------------------------------------------------------------------
+	-module(`Filename()`).
+
+	-behaviour(supervisor_bridge).
+
+	%% API
+	-export([start_link/0]).
+
+	%% supervisor_bridge callbacks
+	-export([init/1, terminate/2]).
+
+	-define(SERVER, ?MODULE).
+
+	-record(state, {}).
+
+	%%%===================================================================
+	%%% API
+	%%%===================================================================
+
+	%%--------------------------------------------------------------------
+	%% @doc
+	%% Starts the supervisor bridge
+	%%
+	%% @spec start_link() -> {ok, Pid} | ignore | {error, Error}
+	%% @end
+	%%--------------------------------------------------------------------
+	start_link() ->
+		supervisor_bridge:start_link({local, ?SERVER}, ?MODULE, []).
+
+	%%%===================================================================
+	%%% supervisor_bridge callbacks
+	%%%===================================================================
+
+	%%--------------------------------------------------------------------
+	%% @private
+	%% @doc
+	%% Creates a supervisor_bridge process, linked to the calling process,
+	%% which calls Module:init/1 to start the subsystem. To ensure a
+	%% synchronized start-up procedure, this function does not return
+	%% until Module:init/1 has returned.
+	%%
+	%% @spec init(Args) -> {ok, Pid, State} |
+	%%                     ignore |
+	%%                     {error, Reason}
+	%% @end
+	%%--------------------------------------------------------------------
+	init([]) ->
+		case 'AModule':start_link() of
+		{ok, Pid} ->
+			{ok, Pid, #state{}};
+		Error ->
+			Error
+			end.
+
+	%%--------------------------------------------------------------------
+	%% @private
+	%% @doc
+	%% This function is called by the supervisor_bridge when it is about
+	%% to terminate. It should be the opposite of Module:init/1 and stop
+	%% the subsystem and do any necessary cleaning up.The return value is
+	%% ignored.
+	%%
+	%% @spec terminate(Reason, State) -> void()
+	%% @end
+	%%--------------------------------------------------------------------
+	terminate(Reason, State) ->
+		'AModule':stop(),
+		ok.
+
+	%%%===================================================================
+	%%% Internal functions
+	%%%===================================================================
+
+
+
+	%% vim: set et ts=2 sw=2 ai invlist si cul nu:
+# application OTP behaviour
+snippet otp application
+	%%%-------------------------------------------------------------------
+	%%% @author  `g:snips_author` `g:my_email_addr`
+	%%% @copyright (C) `strftime("%Y")` `g:snips_author`. All Rights Reserved.
+	%%% @doc
+	%%%		${1}
+	%%% @end
+	%%% Created :  `strftime("%a %b %d %H:%M:%S %Y")` by `g:snips_author`
+	%%%-------------------------------------------------------------------
+	-module(`Filename()`).
+
+	-behaviour(application).
+
+	%% Application callbacks
+	-export([start/2, stop/1]).
+
+	%%%===================================================================
+	%%% Application callbacks
+	%%%===================================================================
+
+	%%--------------------------------------------------------------------
+	%% @private
+	%% @doc
+	%% This function is called whenever an application is started using
+	%% application:start/[1,2], and should start the processes of the
+	%% application. If the application is structured according to the OTP
+	%% design principles as a supervision tree, this means starting the
+	%% top supervisor of the tree.
+	%%
+	%% @spec start(StartType, StartArgs) -> {ok, Pid} |
+	%%                                      {ok, Pid, State} |
+	%%                                      {error, Reason}
+	%%      StartType = normal | {takeover, Node} | {failover, Node}
+	%%      StartArgs = term()
+	%% @end
+	%%--------------------------------------------------------------------
+	start(_StartType, _StartArgs) ->
+		case 'TopSupervisor':start_link() of
+		{ok, Pid} ->
+			{ok, Pid};
+		Error ->
+			Error
+			end.
+
+	%%--------------------------------------------------------------------
+	%% @private
+	%% @doc
+	%% This function is called whenever an application has stopped. It
+	%% is intended to be the opposite of Module:start/2 and should do
+	%% any necessary cleaning up. The return value is ignored.
+	%%
+	%% @spec stop(State) -> void()
+	%% @end
+	%%--------------------------------------------------------------------
+	stop(_State) ->
+		ok.
+
+	%%%===================================================================
+	%%% Internal functions
+	%%%===================================================================
+
+
+
+	%% vim: set et ts=2 sw=2 ai invlist si cul nu:	
+# library module
+snippet otp library
+	%%%-------------------------------------------------------------------
+	%%% @author  `g:snips_author` `g:my_email_addr`
+	%%% @copyright (C) `strftime("%Y")` `g:snips_author`. All Rights Reserved.
+	%%% @doc
+	%%%		${1}
+	%%% @end
+	%%% Created :  `strftime("%a %b %d %H:%M:%S %Y")` by `g:snips_author`
+	%%%-------------------------------------------------------------------
+	-module(`Filename()`).
+
+	%% API
+	-export([]).
+
+	%%%===================================================================
+	%%% API
+	%%%===================================================================
+
+	%%--------------------------------------------------------------------
+	%% @doc
+	%% @spec
+	%% @end
+	%%--------------------------------------------------------------------
+
+	%%%===================================================================
+	%%% Internal functions
+	%%%===================================================================
+
+
+
+	%% vim: set et ts=2 sw=2 ai invlist si cul nu:
+# corba callback
+snippet otp corba_callback
+	%%%-------------------------------------------------------------------
+	%%% @author  `g:snips_author` `g:my_email_addr`
+	%%% @copyright (C) `strftime("%Y")` `g:snips_author`. All Rights Reserved.
+	%%% @doc
+	%%%		${1}
+	%%% @end
+	%%% Created :  `strftime("%a %b %d %H:%M:%S %Y")` by `g:snips_author`
+	%%%-------------------------------------------------------------------
+	-module(`Filename()`).
+
+	%% Include files
+
+	%% API
+	-export([]).
+
+	%% Corba callbacks
+	-export([init/1, terminate/2, code_change/3]).
+
+	-record(state, {}).
+
+	%%%===================================================================
+	%%% Corba callbacks
+	%%%===================================================================
+
+	%%--------------------------------------------------------------------
+	%% @private
+	%% @doc
+	%% Initializes the server
+	%%
+	%% @spec init(Args) -> {ok, State} |
+	%%                     {ok, State, Timeout} |
+	%%                     ignore |
+	%%                     {stop, Reason}
+	%% @end
+	%%--------------------------------------------------------------------
+	init([]) ->
+		{ok, #state{}}.
+
+	%%--------------------------------------------------------------------
+	%% @private
+	%% @doc
+	%% Shutdown the server
+	%%
+	%% @spec terminate(Reason, State) -> void()
+	%% @end
+	%%--------------------------------------------------------------------
+	terminate(_Reason, _State) ->
+		ok.
+
+	%%--------------------------------------------------------------------
+	%% @private
+	%% @doc
+	%% Convert process state when code is changed
+	%%
+	%% @spec code_change(OldVsn, State, Extra) -> {ok, NewState}
+	%% @end
+	%%--------------------------------------------------------------------
+	code_change(_OldVsn, State, _Extra) ->
+		{ok, State}.
+
+	%%%===================================================================
+	%%% Internal functions
+	%%%===================================================================
+
+
+
+	%% vim: set et ts=2 sw=2 ai invlist si cul nu:
+
+#=========================================================
+# Test suites
+#=========================================================
+
+# small CT (common test) suite
+snippet test small CT suite
+	%%%-------------------------------------------------------------------
+	%%% @author  `g:snips_author` `g:my_email_addr`
+	%%% @copyright (C) `strftime("%Y")` `g:snips_author`. All Rights Reserved.
+	%%% @doc
+	%%%		${1}
+	%%% @end
+	%%% Created :  `strftime("%a %b %d %H:%M:%S %Y")` by `g:snips_author`
+	%%%-------------------------------------------------------------------
+	-module(`Filename()`).
+
+	-compile(export_all).
+
+	-include_lib("common_test/include/ct.hrl").
+
+	%%--------------------------------------------------------------------
+	%% @spec suite() -> Info
+	%% Info = [tuple()]
+	%% @end
+	%%--------------------------------------------------------------------
+	suite() ->
+		[{timetrap,{seconds,30}}].
+
+	%%--------------------------------------------------------------------
+	%% @spec init_per_suite(Config0) ->
+	%%     Config1 | {skip,Reason} | {skip_and_save,Reason,Config1}
+	%% Config0 = Config1 = [tuple()]
+	%% Reason = term()
+	%% @end
+	%%--------------------------------------------------------------------
+	init_per_suite(Config) ->
+		Config.
+
+	%%--------------------------------------------------------------------
+	%% @spec end_per_suite(Config0) -> void() | {save_config,Config1}
+	%% Config0 = Config1 = [tuple()]
+	%% @end
+	%%--------------------------------------------------------------------
+	end_per_suite(_Config) ->
+		ok.
+
+	%%--------------------------------------------------------------------
+	%% @spec init_per_group(GroupName, Config0) ->
+	%%               Config1 | {skip,Reason} | {skip_and_save,Reason,Config1}
+	%% GroupName = atom()
+	%% Config0 = Config1 = [tuple()]
+	%% Reason = term()
+	%% @end
+	%%--------------------------------------------------------------------
+	init_per_group(_GroupName, Config) ->
+		Config.
+
+	%%--------------------------------------------------------------------
+	%% @spec end_per_group(GroupName, Config0) ->
+	%%               void() | {save_config,Config1}
+	%% GroupName = atom()
+	%% Config0 = Config1 = [tuple()]
+	%% @end
+	%%--------------------------------------------------------------------
+	end_per_group(_GroupName, _Config) ->
+		ok.
+
+	%%--------------------------------------------------------------------
+	%% @spec init_per_testcase(TestCase, Config0) ->
+	%%               Config1 | {skip,Reason} | {skip_and_save,Reason,Config1}
+	%% TestCase = atom()
+	%% Config0 = Config1 = [tuple()]
+	%% Reason = term()
+	%% @end
+	%%--------------------------------------------------------------------
+	init_per_testcase(_TestCase, Config) ->
+		Config.
+
+	%%--------------------------------------------------------------------
+	%% @spec end_per_testcase(TestCase, Config0) ->
+	%%               void() | {save_config,Config1} | {fail,Reason}
+	%% TestCase = atom()
+	%% Config0 = Config1 = [tuple()]
+	%% Reason = term()
+	%% @end
+	%%--------------------------------------------------------------------
+	end_per_testcase(_TestCase, _Config) ->
+		ok.
+
+	%%--------------------------------------------------------------------
+	%% @spec groups() -> [Group]
+	%% Group = {GroupName,Properties,GroupsAndTestCases}
+	%% GroupName = atom()
+	%% Properties = [parallel | sequence | Shuffle | {RepeatType,N}]
+	%% GroupsAndTestCases = [Group | {group,GroupName} | TestCase]
+	%% TestCase = atom()
+	%% Shuffle = shuffle | {shuffle,{integer(),integer(),integer()}}
+	%% RepeatType = repeat | repeat_until_all_ok | repeat_until_all_fail |
+	%%              repeat_until_any_ok | repeat_until_any_fail
+	%% N = integer() | forever
+	%% @end
+	%%--------------------------------------------------------------------
+	groups() ->
+		[].
+
+	%%--------------------------------------------------------------------
+	%% @spec all() -> GroupsAndTestCases | {skip,Reason}
+	%% GroupsAndTestCases = [{group,GroupName} | TestCase]
+	%% GroupName = atom()
+	%% TestCase = atom()
+	%% Reason = term()
+	%% @end
+	%%--------------------------------------------------------------------
+	all() -> 
+		[my_test_case].
+
+	%%--------------------------------------------------------------------
+	%% @spec TestCase() -> Info
+	%% Info = [tuple()]
+	%% @end
+	%%--------------------------------------------------------------------
+	my_test_case() -> 
+		[].
+
+	%%--------------------------------------------------------------------
+	%% @spec TestCase(Config0) ->
+	%%               ok | exit() | {skip,Reason} | {comment,Comment} |
+	%%               {save_config,Config1} | {skip_and_save,Reason,Config1}
+	%% Config0 = Config1 = [tuple()]
+	%% Reason = term()
+	%% Comment = term()
+	%% @end
+	%%--------------------------------------------------------------------
+	my_test_case(_Config) -> 
+		ok.
+
+
+
+	%% vim: set et ts=2 sw=2 ai invlist si cul nu:
+# large CT (common test) suite
+snippet test large CT suite
+	%%%-------------------------------------------------------------------
+	%%% @author  `g:snips_author` `g:my_email_addr`
+	%%% @copyright (C) `strftime("%Y")` `g:snips_author`. All Rights Reserved.
+	%%% @doc
+	%%%		${1}
+	%%% @end
+	%%% Created :  `strftime("%a %b %d %H:%M:%S %Y")` by `g:snips_author`
+	%%%-------------------------------------------------------------------
+	-module(`Filename()`).
+
+	%% Note: This directive should only be used in test suites.
+	-compile(export_all).
+
+	-include_lib("common_test/include/ct.hrl").
+
+	%%--------------------------------------------------------------------
+	%% COMMON TEST CALLBACK FUNCTIONS
+	%%--------------------------------------------------------------------
+
+	%%--------------------------------------------------------------------
+	%% @doc
+	%%  Returns list of tuples to set default properties
+	%%  for the suite.
+	%%
+	%% Function: suite() -> Info
+	%%
+	%% Info = [tuple()]
+	%%   List of key/value pairs.
+	%%
+	%% Note: The suite/0 function is only meant to be used to return
+	%% default data values, not perform any other operations.
+	%%
+	%% @spec suite() -> Info
+	%% @end
+	%%--------------------------------------------------------------------
+	suite() ->
+		[{timetrap,{minutes,10}}].
+
+	%%--------------------------------------------------------------------
+	%% @doc
+	%% Initialization before the whole suite
+	%%
+	%% Config0 = Config1 = [tuple()]
+	%%   A list of key/value pairs, holding the test case configuration.
+	%% Reason = term()
+	%%   The reason for skipping the suite.
+	%%
+	%% Note: This function is free to add any key/value pairs to the Config
+	%% variable, but should NOT alter/remove any existing entries.
+	%%
+	%% @spec init_per_suite(Config0) ->
+	%%               Config1 | {skip,Reason} | {skip_and_save,Reason,Config1}
+	%% @end
+	%%--------------------------------------------------------------------
+	init_per_suite(Config) ->
+		Config.
+
+	%%--------------------------------------------------------------------
+	%% @doc
+	%% Cleanup after the whole suite
+	%%
+	%% Config - [tuple()]
+	%%   A list of key/value pairs, holding the test case configuration.
+	%%
+	%% @spec end_per_suite(Config) -> _
+	%% @end
+	%%--------------------------------------------------------------------
+	end_per_suite(_Config) ->
+		ok.
+
+	%%--------------------------------------------------------------------
+	%% @doc
+	%% Initialization before each test case group.
+	%%
+	%% GroupName = atom()
+	%%   Name of the test case group that is about to run.
+	%% Config0 = Config1 = [tuple()]
+	%%   A list of key/value pairs, holding configuration data for the group.
+	%% Reason = term()
+	%%   The reason for skipping all test cases and subgroups in the group.
+	%%
+	%% @spec init_per_group(GroupName, Config0) ->
+	%%               Config1 | {skip,Reason} | {skip_and_save,Reason,Config1}
+	%% @end
+	%%--------------------------------------------------------------------
+	init_per_group(_GroupName, Config) ->
+		Config.
+
+	%%--------------------------------------------------------------------
+	%% @doc
+	%% Cleanup after each test case group.
+	%%
+	%% GroupName = atom()
+	%%   Name of the test case group that is finished.
+	%% Config0 = Config1 = [tuple()]
+	%%   A list of key/value pairs, holding configuration data for the group.
+	%%
+	%% @spec end_per_group(GroupName, Config0) ->
+	%%               void() | {save_config,Config1}
+	%% @end
+	%%--------------------------------------------------------------------
+	end_per_group(_GroupName, _Config) ->
+		ok.
+
+	%%--------------------------------------------------------------------
+	%% @doc
+	%% Initialization before each test case
+	%%
+	%% TestCase - atom()
+	%%   Name of the test case that is about to be run.
+	%% Config0 = Config1 = [tuple()]
+	%%   A list of key/value pairs, holding the test case configuration.
+	%% Reason = term()
+	%%   The reason for skipping the test case.
+	%%
+	%% Note: This function is free to add any key/value pairs to the Config
+	%% variable, but should NOT alter/remove any existing entries.
+	%%
+	%% @spec init_per_testcase(TestCase, Config0) ->
+	%%               Config1 | {skip,Reason} | {skip_and_save,Reason,Config1}
+	%% @end
+	%%--------------------------------------------------------------------
+	init_per_testcase(_TestCase, Config) ->
+		Config.
+
+	%%--------------------------------------------------------------------
+	%% @doc
+	%% Cleanup after each test case
+	%%
+	%% TestCase - atom()
+	%%   Name of the test case that is finished.
+	%% Config0 = Config1 = [tuple()]
+	%%   A list of key/value pairs, holding the test case configuration.
+	%%
+	%% @spec end_per_testcase(TestCase, Config0) ->
+	%%               void() | {save_config,Config1} | {fail,Reason}
+	%% @end
+	%%--------------------------------------------------------------------
+	end_per_testcase(_TestCase, _Config) ->
+		ok.
+
+	%%--------------------------------------------------------------------
+	%% @doc
+	%% Returns a list of test case group definitions.
+	%%
+	%% Group = {GroupName,Properties,GroupsAndTestCases}
+	%% GroupName = atom()
+	%%   The name of the group.
+	%% Properties = [parallel | sequence | Shuffle | {RepeatType,N}]
+	%%   Group properties that may be combined.
+	%% GroupsAndTestCases = [Group | {group,GroupName} | TestCase]
+	%% TestCase = atom()
+	%%   The name of a test case.
+	%% Shuffle = shuffle | {shuffle,Seed}
+	%%   To get cases executed in random order.
+	%% Seed = {integer(),integer(),integer()}
+	%% RepeatType = repeat | repeat_until_all_ok | repeat_until_all_fail |
+	%%              repeat_until_any_ok | repeat_until_any_fail
+	%%   To get execution of cases repeated.
+	%% N = integer() | forever
+	%%
+	%% @spec: groups() -> [Group]
+	%% @end
+	%%--------------------------------------------------------------------
+	groups() ->
+		[].
+
+	%%--------------------------------------------------------------------
+	%% @doc
+	%%  Returns the list of groups and test cases that
+	%%  are to be executed.
+	%%
+	%% GroupsAndTestCases = [{group,GroupName} | TestCase]
+	%% GroupName = atom()
+	%%   Name of a test case group.
+	%% TestCase = atom()
+	%%   Name of a test case.
+	%% Reason = term()
+	%%   The reason for skipping all groups and test cases.
+	%%
+	%% @spec all() -> GroupsAndTestCases | {skip,Reason}
+	%% @end
+	%%--------------------------------------------------------------------
+	all() -> 
+		[my_test_case].
+
+
+	%%--------------------------------------------------------------------
+	%% TEST CASES
+	%%--------------------------------------------------------------------
+
+	%%--------------------------------------------------------------------
+	%% @doc 
+	%%  Test case info function - returns list of tuples to set
+	%%  properties for the test case.
+	%%
+	%% Info = [tuple()]
+	%%   List of key/value pairs.
+	%%
+	%% Note: This function is only meant to be used to return a list of
+	%% values, not perform any other operations.
+	%%
+	%% @spec TestCase() -> Info 
+	%% @end
+	%%--------------------------------------------------------------------
+	my_test_case() -> 
+		[].
+
+	%%--------------------------------------------------------------------
+	%% @doc Test case function. (The name of it must be specified in
+	%%              the all/0 list or in a test case group for the test case
+	%%              to be executed).
+	%%
+	%% Config0 = Config1 = [tuple()]
+	%%   A list of key/value pairs, holding the test case configuration.
+	%% Reason = term()
+	%%   The reason for skipping the test case.
+	%% Comment = term()
+	%%   A comment about the test case that will be printed in the html log.
+	%%
+	%% @spec TestCase(Config0) ->
+	%%           ok | exit() | {skip,Reason} | {comment,Comment} |
+	%%           {save_config,Config1} | {skip_and_save,Reason,Config1}
+	%% @end
+	%%--------------------------------------------------------------------
+	my_test_case(_Config) -> 
+		ok.
+
+
+
+	%% vim: set et ts=2 sw=2 ai invlist si cul nu:
+# TS test suite
+snippet test TS test suite
+	%%%-------------------------------------------------------------------
+	%%% @author  `g:snips_author` `g:my_email_addr`
+	%%% @copyright (C) `strftime("%Y")` `g:snips_author`. All Rights Reserved.
+	%%% @doc
+	%%%		${1}
+	%%% @end
+	%%% Created :  `strftime("%a %b %d %H:%M:%S %Y")` by `g:snips_author`
+	%%%-------------------------------------------------------------------
+	-module(`Filename()`).
+
+	%% Note: This directive should only be used in test suites.
+	-compile(export_all).
+
+	-include_lib("test_server/include/test_server.hrl").
+
+	%%--------------------------------------------------------------------
+	%% TEST SERVER CALLBACK FUNCTIONS
+	%%--------------------------------------------------------------------
+
+	%%--------------------------------------------------------------------
+	%%
+	%% @doc
+	%% Initialization before the suite.
+	%%
+	%% Config0 = Config1 = [tuple()]
+	%%   A list of key/value pairs, holding the test case configuration.
+	%% Reason = term()
+	%%   The reason for skipping the suite.
+	%%
+	%% Note: This function is free to add any key/value pairs to the Config
+	%% variable, but should NOT alter/remove any existing entries.
+	%%
+	%% @spec init_per_suite(Config) -> Config
+	%% @end
+	%%--------------------------------------------------------------------
+	init_per_suite(Config) ->
+		Config.
+
+	%%--------------------------------------------------------------------
+	%% @doc
+	%% Cleanup after the suite.
+	%% Config - [tuple()]
+	%%   A list of key/value pairs, holding the test case configuration.
+	%%
+	%% @spec end_per_suite(Config) -> _
+	%% @end
+	%%--------------------------------------------------------------------
+	end_per_suite(_Config) ->
+		ok.
+
+	%%--------------------------------------------------------------------
+	%% @doc
+	%% Initialization before each test case
+	%%
+	%% TestCase - atom()
+	%%   Name of the test case that is about to be run.
+	%% Config - [tuple()]
+	%%   A list of key/value pairs, holding the test case configuration.
+	%% Reason = term()
+	%%   The reason for skipping the test case.
+	%%
+	%% Note: This function is free to add any key/value pairs to the Config
+	%% variable, but should NOT alter/remove any existing entries.
+	%%
+	%% @spec init_per_testcase(TestCase, Config) -> Config
+	%% @end
+	%%--------------------------------------------------------------------
+	init_per_testcase(_TestCase, Config) ->
+		Config.
+
+	%%--------------------------------------------------------------------
+	%% @doc
+	%% Cleanup after each test case
+	%%
+	%% TestCase = atom()
+	%%   Name of the test case that is finished.
+	%% Config = [tuple()]
+	%%   A list of key/value pairs, holding the test case configuration.
+	%%
+	%% @spec end_per_testcase(TestCase, Config) -> _
+	%% @end
+	%%--------------------------------------------------------------------
+	end_per_testcase(_TestCase, _Config) ->
+		ok.
+
+	%%--------------------------------------------------------------------
+	%% @doc
+	%% Returns a description of the test suite when
+	%% Clause == doc, and a test specification (list
+	%% of the conf and test cases in the suite) when
+	%% Clause == suite.
+	%% Returns a list of all test cases in this test suite
+	%%
+	%% Clause = doc | suite
+	%%   Indicates expected return value.
+	%% Descr = [string()] | []
+	%%   String that describes the test suite.
+	%% Spec = [TestCase]
+	%%   A test specification.
+	%% TestCase = ConfCase | atom()
+	%%   Configuration case, or the name of a test case function.
+	%% ConfCase = {conf,Init,Spec,End} |
+	%%            {conf,Properties,Init,Spec,End}
+	%% Init = End = {Mod,Func} | Func
+	%%   Initialization and cleanup function.
+	%% Mod = Func = atom()
+	%% Properties = [parallel | sequence | Shuffle | {RepeatType,N}]
+	%%   Execution properties of the test cases (may be combined).
+	%% Shuffle = shuffle | {shuffle,Seed}
+	%%   To get cases executed in random order.
+	%% Seed = {integer(),integer(),integer()}
+	%% RepeatType = repeat | repeat_until_all_ok | repeat_until_all_fail |
+	%%              repeat_until_any_ok | repeat_until_any_fail
+	%%   To get execution of cases repeated.
+	%% N = integer() | forever
+	%% Reason = term()
+	%%   The reason for skipping the test suite.
+	%%
+	%% @spec all(Clause) -> TestCases
+	%% @end
+	%%--------------------------------------------------------------------
+	all(doc) ->
+		["Describe the main purpose of this suite"];
+
+	all(suite) -> 
+		[a_test_case].
+
+
+	%%--------------------------------------------------------------------
+	%% TEST CASES
+	%%--------------------------------------------------------------------
+
+	%%--------------------------------------------------------------------
+	%% @doc
+	%%  Test case function. Returns a description of the test
+	%%  case (doc), then returns a test specification (suite),
+	%%  or performs the actual test (Config).
+	%%
+	%% Arg = doc | suite | Config
+	%%   Indicates expected behaviour and return value.
+	%% Config = [tuple()]
+	%%   A list of key/value pairs, holding the test case configuration.
+	%% Descr = [string()] | []
+	%%   String that describes the test case.
+	%% Spec = [tuple()] | []
+	%%   A test specification, see all/1.
+	%% Reason = term()
+	%%   The reason for skipping the test case.
+	%%
+	%% @spec TestCase(Arg) -> Descr | Spec | ok | exit() | {skip,Reason}
+	%% @end
+	%%--------------------------------------------------------------------
+	a_test_case(doc) -> 
+		["Describe the main purpose of this test case"];
+
+	a_test_case(suite) -> 
+		[];
+
+	a_test_case(Config) when is_list(Config) -> 
+		ok.
+
+
+
+	%% vim: set et ts=2 sw=2 ai invlist si cul nu:
+
