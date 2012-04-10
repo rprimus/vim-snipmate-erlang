@@ -16,7 +16,7 @@ snippet head normal header
 	%%% Created :  `strftime("%a %b %d %H:%M:%S %Y")` by `g:snips_author` µ
 
 	-module(`Filename()`).
-
+  ${2}
 
 
 	%% vim: set et ts=2 sw=2 ai invlist si cul nu:	
@@ -33,6 +33,25 @@ snippet head large header
 	%%%-------------------------------------------------------------------
 
 	-module(`Filename()`).
+	-vsn('${2:version}').
+	-author('`g:my_email_addr`').
+	-doc("").
+	-purpose("").
+
+	-include("../include/`Filename()`.hrl").
+	${3}
+
+	%% External exports
+	-export([
+	]).
+
+	%% Records
+
+	%% Macros
+
+	%% used for debugging
+	-define(L(Obj), io:format("LOG ~w ~p\n", [?LINE, Obj])).
+
 
 
 
@@ -52,7 +71,7 @@ snippet disc
 	%%% See the file COPYING
 
 #=========================================================
-# Module material
+# Module material - indovidual
 #=========================================================
 
 # -module()
@@ -70,8 +89,10 @@ snippet inc ?MODULE.hrl
 	-include("${1:`Filename("$1.hrl")`}").${3}
 	
 # -export()
-snippet exp
+snippet exp specific
 	-export([${1:exports}]).${3}
+snippet exp all
+	-compile(export_all).${1}
 
 # vsn
 snippet vsn
@@ -94,8 +115,9 @@ snippet rec
 		${4:field}	::${5:type}
 	}).
 
+# simple file template 
 #=========================================================
-# Module material
+# Erlang contructs
 #=========================================================
 
 # list comprehension
